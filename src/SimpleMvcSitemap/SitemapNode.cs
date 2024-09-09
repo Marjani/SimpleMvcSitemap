@@ -39,8 +39,22 @@ namespace SimpleMvcSitemap
         /// <summary>
         /// Shows the date the URL was last modified, value is optional.
         /// </summary>
-        [XmlElement("lastmod", Order = 2)]
+        [XmlIgnore]
         public DateTime? LastModificationDate { get; set; }
+
+        [XmlElement("lastmod", Order = 2)]
+        public string LastModificationDateFixFormat
+        {
+            get
+            {
+                if (this.LastModificationDate.HasValue)
+                {
+                    return this.LastModificationDate.Value.ToString("YYYY-MM-DDThh:mm:ss.sTZD");
+                }
+                else { return null; }
+            }
+            set { this.LastModificationDate = DateTime.Parse(value); }
+        }
 
 
         /// <summary>
